@@ -42,20 +42,25 @@ class MainViewModel(val database : AsteroidsDatabase, application: Application) 
     val asteroidsRepository = AsteroidsRepository(database)
 
     init {
+        Timber.i("ViewModelInit")
         _navigateToDetailsScreen.value = false
         viewModelScope.launch {
+            Timber.i("ViewModelInit launch")
             refreshPictureOfDayFromNetwork()
             refreshAsteroidsFromNetwork()
         }
     }
 
     private fun refreshPictureOfDayFromNetwork() {
+        Timber.i("refreshPictureOfDayFromNetwork")
         viewModelScope.launch {
             try {
+                Timber.i("refreshPictureOfDayFromNetwork : LOADING")
                 _imageStatus.value = NasaImageRequestStatus.LOADING
                 asteroidsRepository.refreshImageOfTheDay()
                 _imageOfTheDayVar.value = asteroidsRepository.getImageOfTheDay()
                 _imageStatus.value = NasaImageRequestStatus.DONE
+                Timber.i("refreshPictureOfDayFromNetwork : DONE")
             }
             catch (e : Exception) {
                 _imageStatus.value = NasaImageRequestStatus.ERROR
@@ -65,12 +70,15 @@ class MainViewModel(val database : AsteroidsDatabase, application: Application) 
     }
 
     private fun refreshAsteroidsFromNetwork() {
+        Timber.i("refreshAsteroidsFromNetwork")
         viewModelScope.launch {
             try {
+                Timber.i("refreshAsteroidsFromNetwork : DOWNLOADING")
                 _asteroidsStatus.value = NasaAsteroidsRequestStatus.DOWNLOADING
                 asteroidsRepository.refreshAsteroidsData()
                 asteroidsVar = asteroidsRepository.asteroids
                 _asteroidsStatus.value = NasaAsteroidsRequestStatus.SUCCESS
+                Timber.i("refreshAsteroidsFromNetwork : SUCCESS")
             }
             catch (e : Exception) {
                 _asteroidsStatus.value = NasaAsteroidsRequestStatus.FAILURE

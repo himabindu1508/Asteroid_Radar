@@ -7,9 +7,9 @@ import androidx.databinding.BindingAdapter
 import com.squareup.picasso.Picasso
 
 @BindingAdapter("setImageFromUrl")
-fun setImageOfTheDay(imgView : ImageView, imgUrl : String) {
+fun setImageOfTheDay(imgView : ImageView, imgUrl : String?) {
     imgUrl?.let {
-        val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
+        val imgUri = it.toUri().buildUpon().scheme("https").build()
         Picasso.get().load(imgUri)
             .placeholder(R.drawable.placeholder_picture_of_day)
             .error(R.drawable.ic_broken_image)
@@ -55,7 +55,8 @@ fun bindTextViewToDisplayVelocity(textView: TextView, number: Double) {
 
 enum class NasaImageRequestStatus {
     LOADING,
-    DONE, ERROR
+    DONE,
+    ERROR
 }
 
 enum class NasaAsteroidsRequestStatus {

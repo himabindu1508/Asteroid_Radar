@@ -25,7 +25,7 @@ class AsteroidsRepository(private val database : AsteroidsDatabase)
         it.asDomainModel()
     }
 
-    suspend fun getImageOfTheDay() : ImageOfTheDay? {
+    fun getImageOfTheDay() : ImageOfTheDay? {
         val temp = database.astroidsDao.getImageOfTheDay()
         Timber.i("Image : url = ${temp.value?.url} media_type = ${temp.value?.media_type} title = ${temp.value?.title}")
         return temp.value?.let { ImageOfTheDay(it.url, it.media_type, it.title) }
@@ -46,7 +46,7 @@ class AsteroidsRepository(private val database : AsteroidsDatabase)
         }
     }
 
-    suspend fun clearAsteroidsData() {
+    fun clearAsteroidsData() {
         database.astroidsDao.deleteAllAsteroids()
     }
 

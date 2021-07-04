@@ -1,6 +1,7 @@
 package com.udacity.asteroidradar.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -10,6 +11,7 @@ import com.udacity.asteroidradar.R
 import com.udacity.asteroidradar.database.AsteroidsDatabase
 import com.udacity.asteroidradar.database.getAsteroidsDatabase
 import com.udacity.asteroidradar.databinding.FragmentMainBinding
+import timber.log.Timber
 
 class MainFragment : Fragment() {
 
@@ -27,6 +29,9 @@ class MainFragment : Fragment() {
 
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+
+        Log.i("MAIN_FRAGMNET created", "__")
+        Timber.i("MAIN_FRAGMNET")
 
         viewModel.navigateToDetailsScreen.observe(viewLifecycleOwner, Observer {
             if(it)
